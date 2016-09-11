@@ -21,6 +21,20 @@
 lang = node['locale']['lang']
 lc_all = node['locale']['lc_all'] || lang
 
+if platform?("ubuntu", "debian")
+
+  package "locales" do
+    action :install
+  end
+
+  node[:locale][:language_packs].each do |language_pack|
+    package "language-pack-#{language_pack}-base" do
+      action :install
+    end
+  end if node[:locale][:language_packs].any?
+
+end
+
 if File.exist?('/usr/sbin/update-locale')
   execute 'Generate locale' do
     command "locale-gen #{lang}"
