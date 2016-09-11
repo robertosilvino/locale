@@ -21,7 +21,7 @@
 lang = node['locale']['lang']
 lc_all = node['locale']['lc_all'] || lang
 
-if platform?("ubuntu", "debian")
+if platform?("ubuntu")
 
   package "locales" do
     action :install
